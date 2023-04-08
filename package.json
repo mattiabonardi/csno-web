@@ -1,0 +1,27 @@
+{
+  "name": "csno-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@splinetool/loader": "^0.9.178",
+    "@splinetool/react-spline": "^2.2.5",
+    "@splinetool/runtime": "^0.9.178",
+    "@types/node": "18.15.11",
+    "@types/react": "18.0.33",
+    "@types/react-dom": "18.0.11",
+    "@types/three": "^0.150.1",
+    "eslint": "8.38.0",
+    "eslint-config-next": "13.3.0",
+    "next": "13.3.0",
+    "react": "18.2.0",
+    "react-dom": "18.2.0",
+    "three": "^0.151.3",
+    "typescript": "5.0.4"
+  }
+}

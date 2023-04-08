@@ -1,0 +1,49 @@
+.main {
+  height: 100vh;
+  width: 100vw;
+}
+
+.background {
+  width: 100vw;
+  height: 100vh;
+}
+
+.background img {
+  max-width: 100%;
+}
+
+.actions {
+  width: 100%;
+  position: absolute;
+  z-index: 1;
+  top: 40%;
+  height: 30vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 40px;
+}
+
+.play {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: var(--primary-color);
+  box-sizing: border-box;
+}
+
+.play img {
+  margin-left: 5px;
+}
+
+.about {
+  text-decoration: underline;
+  font-size: 12;
+  font-weight: bold;
+  color: var(--secondary-color);
+  font-family: var(--secondary-font-family);
+}
