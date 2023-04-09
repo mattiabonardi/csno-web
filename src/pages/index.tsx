@@ -21,60 +21,65 @@ export default function Home() {
   }, [visible]);
 
   useEffect(() => {
-    const n = window.innerWidth > 1000 ? 1.8 : 1.5;
-    // camera
-    const camera = new THREE.OrthographicCamera(
-      window.innerWidth / -n,
-      window.innerWidth / n,
-      window.innerHeight / n,
-      window.innerHeight / -n,
-      -50000,
-      50000
-    );
-    camera.position.set(0, 1, -50);
-    camera.quaternion.setFromEuler(new THREE.Euler(0, 0, 0));
+    let camera;
+    let renderer;
+    let scene;
+    let controls;
 
-    // scene
-    const scene = new THREE.Scene();
-    //const textureLoader = new THREE.TextureLoader();
-    //scene.background = textureLoader.load("textures/background.png");
+    if (!model.current.hasChildNodes()) {
+      const n = window.innerWidth > 1000 ? 1.8 : 1.5;
+      // camera
+      camera = new THREE.OrthographicCamera(
+        window.innerWidth / -n,
+        window.innerWidth / n,
+        window.innerHeight / n,
+        window.innerHeight / -n,
+        -50000,
+        50000
+      );
+      camera.position.set(0, 1, -50);
+      camera.quaternion.setFromEuler(new THREE.Euler(0, 0, 0));
 
-    // spline scene
-    const loader = new SplineLoader();
-    if ((window as any).splineScene) {
-      // add directly spline model to scene
-      scene.add((window as any).splineScene);
-    } else {
-      // load 3d model
-      loader.load("scene.splinecode", (splineScene) => {
-        scene.add(splineScene);
-        // add splineScene object to window
-        (window as any).splineScene = splineScene;
-      });
+      // scene
+      scene = new THREE.Scene();
+
+      // spline scene
+      const loader = new SplineLoader();
+      if ((window as any).splineScene) {
+        // add directly spline model to scene
+        scene.add((window as any).splineScene);
+      } else {
+        // load 3d model
+        loader.load("scene.splinecode", (splineScene) => {
+          scene.add(splineScene);
+          // add splineScene object to window
+          (window as any).splineScene = splineScene;
+        });
+      }
+
+      // renderer
+      renderer = new THREE.WebGLRenderer({ alpha: true });
+      renderer.setSize(window.innerWidth, window.innerHeight);
+      renderer.setAnimationLoop(animate);
+      renderer.setClearColor(0x000000, 0);
+      model.current?.appendChild(renderer.domElement);
+
+      // scene settings
+      renderer.shadowMap.enabled = true;
+      renderer.shadowMap.type = THREE.PCFShadowMap;
+
+      renderer.setClearAlpha(1);
+
+      // orbit controls
+      controls = new OrbitControls(camera, model.current as HTMLDivElement);
+      controls.enableDamping = true;
+      controls.dampingFactor = 0.125;
+      controls.rotateSpeed = 0.4;
+      controls.panSpeed = 0.4;
+      controls.autoRotate = true;
+
+      window.addEventListener("resize", onWindowResize);
     }
-
-    // renderer
-    const renderer = new THREE.WebGLRenderer({ alpha: true });
-    renderer.setSize(window.innerWidth, window.innerHeight);
-    renderer.setAnimationLoop(animate);
-    renderer.setClearColor(0x000000, 0);
-    model.current?.appendChild(renderer.domElement);
-
-    // scene settings
-    renderer.shadowMap.enabled = true;
-    renderer.shadowMap.type = THREE.PCFShadowMap;
-
-    renderer.setClearAlpha(1);
-
-    // orbit controls
-    const controls = new OrbitControls(camera, model.current as HTMLDivElement);
-    controls.enableDamping = true;
-    controls.dampingFactor = 0.125;
-    controls.rotateSpeed = 0.4;
-    controls.panSpeed = 0.4;
-    controls.autoRotate = true;
-
-    window.addEventListener("resize", onWindowResize);
     function onWindowResize() {
       camera.left = window.innerWidth / -2;
       camera.right = window.innerWidth / 2;
@@ -100,9 +105,9 @@ export default function Home() {
             <img className={styles.playIcon} src="play_arrow.svg" alt="play" />
           </div>
         </Link>
-        <Link href="/about" className={styles.about}>
+        {/*<Link href="/about" className={styles.about}>
           ABOUT
-        </Link>
+  </Link>*/}
       </div>
     </main>
   );
