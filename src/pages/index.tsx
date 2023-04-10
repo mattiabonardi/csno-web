@@ -100,7 +100,7 @@ export default function Home() {
       <Intro active={visible}></Intro>
       <div ref={model} className={styles.background}></div>
       <div className={styles.actions}>
-        <Link href="/games/t-rex-game/default">
+        <Link href="/games/t-rex-game/gmp">
           <div className={styles.play}>
             <img className={styles.playIcon} src="play_arrow.svg" alt="play" />
           </div>
